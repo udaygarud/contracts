@@ -79,14 +79,11 @@ func (t *PartInformation) Query(stub shim.ChaincodeStubInterface, function strin
 	// Handle different functions
 	if function == "read" { //read a variable
 		return t.read(stub, args)
-	} 
-	else if function == "readpartInformation" {
+	} else if function == "readpartInformation" {
 		return t.readpartInformation(stub, args)
-	}
-	else if function == "readAssigneeInformation" {
+	} else if function == "readAssigneeInformation" {
 		return t.readAssigneeInformation(stub, args)
-	}
-	else if function == "readAssigneeStatus" {
+	} else if function == "readAssigneeStatus" {
 		return t.readAssigneeStatus(stub, args)
 	}
 	fmt.Println("query did not find func: " + function)
