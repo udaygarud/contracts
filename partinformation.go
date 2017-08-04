@@ -181,7 +181,7 @@ func (t *PartInformation) addAssignee(stub shim.ChaincodeStubInterface, args []s
 		return nil, errors.New("Error marshaling assign")
 	}
 
-	err = stub.PutState(assign.UserID, bytes)
+	err = stub.PutState(args[0], bytes)
 	if err != nil {
 		return nil, err
 }
@@ -207,11 +207,12 @@ func (t *PartInformation) signbyAssignee(stub shim.ChaincodeStubInterface, args 
 	}
 	
 	id, err := strconv.ParseFloat(args[0], 64)
-	da, err := strconv.ParseBool(args[2])
+	si, err := strconv.ParseBool(args[1])
+	da, err := strconv.ParseFloat(args[2], 64)
 
 	assign := Assigneeinfo{
 		UserID:   id,
-		IsSigned: args[1],
+		IsSigned: si,
 		SignedDate: da,
 		Status: args[3],
 	}
@@ -223,7 +224,7 @@ func (t *PartInformation) signbyAssignee(stub shim.ChaincodeStubInterface, args 
 		return nil, errors.New("Error marshaling assign")
 	}
 
-	err = stub.PutState(assign.UserID, bytes)
+	err = stub.PutState(args[0], bytes)
 	if err != nil {
 		return nil, err
 }
