@@ -194,7 +194,7 @@ func (t *PartInformation) signbyAssignee(stub shim.ChaincodeStubInterface, args 
 		return nil, errors.New("Incorrect Number of arguments.Expecting 4 for addAssignee")
 	}
 	key := args[0]
-	err := stub.GetState(args[0])
+	assignee, err := stub.GetState(args[0])
 	if err != nil {
 		fmt.Println("Error retrieving " + key)
 		return nil, errors.New("Error retrieving " + key)
@@ -228,7 +228,7 @@ func (t *PartInformation) signbyAssignee(stub shim.ChaincodeStubInterface, args 
 	if err != nil {
 		return nil, err
 }
-return nil, nil
+return assignee, nil
 }
 
 func (t *PartInformation) readpartInformation(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
