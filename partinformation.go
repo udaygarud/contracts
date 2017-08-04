@@ -60,11 +60,9 @@ func (t *PartInformation) Invoke(stub shim.ChaincodeStubInterface, function stri
 		return t.write(stub, args)
 	} else if function == "addpartInformation" {
 		return t.addpartInformation(stub, args)
-	}
-	else if function == "addAssignee" {
+	} else if function == "addAssignee" {
 		return t.addAssignee(stub, args)
-	}
-	else if function == "signbyAssignee" {
+	} else if function == "signbyAssignee" {
 		return t.signbyAssignee(stub, args)
 	}
 	fmt.Println("invoke did not find func: " + function)
