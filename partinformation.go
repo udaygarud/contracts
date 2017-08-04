@@ -164,12 +164,12 @@ func (t *PartInformation) addAssignee(stub shim.ChaincodeStubInterface, args []s
 		return nil, errors.New("Incorrect Number of arguments.Expecting 4 for addAssignee")
 	}
 	id, err := strconv.ParseFloat(args[0], 64)
-	da, err := strconv.ParseBool(args[2])
+	da, err := strconv.ParseBool(args[1])
 
 	assign := Assigneeinfo{
 		UserID:   id,
-		IsSigned: args[1],
-		SignedDate: da,
+		IsSigned: da,
+		SignedDate: args[2],
 		Status: args[3],
 	}
 	
@@ -200,7 +200,7 @@ func (t *PartInformation) signbyAssignee(stub shim.ChaincodeStubInterface, args 
 	}
 	
 	// Delete the key from the state in ledger
-	err := stub.DelState(key)
+	newbytes, err := stub.DelState(key)
 	if err != nil {
 		return nil, errors.New("Failed to delete state")
 	}
@@ -271,7 +271,7 @@ func (t *PartInformation) readAssigneeStatus(stub shim.ChaincodeStubInterface, a
 	fmt.Println("read() is running")
 
 	if len(args) != 1 {
-		return nil, errors.New("Incorrect number of arguments. expecting 1")
+		return "false", errors.New("Incorrect number of arguments. expecting 1")
 	}
 
 	key := args[0] // name of Entity
@@ -281,7 +281,7 @@ func (t *PartInformation) readAssigneeStatus(stub shim.ChaincodeStubInterface, a
 	fmt.Println(bytes)
 	if err != nil {
 		fmt.Println("Error retrieving " + key)
-		return nil, errors.New("Error retrieving " + key)
+		return "false", errors.New("Error retrieving " + key)
 	}
 	
 	res := Assigneeinfo{}
